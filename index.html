@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="theme-color" content="#fff8f1">
+  <meta name="theme-color" content="#fff4f8">
   <meta name="description" content="A little birthday love, made just for you.">
   <title>A birthday wish for Pooja</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -12,13 +12,13 @@
   <style>
     :root {
       color-scheme: light;
-      --paper: #fff8f1;
-      --ink: #252b25;
-      --muted: #6f746b;
-      --rose: #c34f61;
-      --rose-dark: #a63e50;
-      --leaf: #526d52;
-      --line: #e9ded2;
+      --paper: #fff4f8;
+      --ink: #39232d;
+      --muted: #806b75;
+      --rose: #d84f87;
+      --rose-dark: #b9386d;
+      --leaf: #75425e;
+      --line: #efd5e0;
       --serif: 'Playfair Display', Georgia, serif;
       --sans: 'DM Sans', sans-serif;
     }
@@ -30,8 +30,8 @@
       margin: 0;
       color: var(--ink);
       background-color: var(--paper);
-      background-image: radial-gradient(#d7bda4 0.65px, transparent 0.65px);
-      background-size: 18px 18px;
+      background-image: radial-gradient(#e9bfd0 0.7px, transparent 0.7px), radial-gradient(ellipse at 82% 20%, rgba(255,218,232,.62), transparent 40%);
+      background-size: 20px 20px, auto;
       font-family: var(--sans);
     }
     button, input, textarea { font: inherit; }
@@ -61,7 +61,54 @@
     .button:hover { transform: translateY(-1px); background: white; }
     .button-primary { border-color: var(--rose); color: white; background: var(--rose); }
     .button-primary:hover { background: var(--rose-dark); }
-    main { padding: clamp(42px, 8vh, 92px) 0 70px; }
+    .button:focus-visible, .close-button:focus-visible, .gallery-remove:focus-visible { outline: 2px solid var(--rose-dark); outline-offset: 3px; }
+    main { padding: 0 0 56px; }
+    .step[hidden], .memories[hidden] { display: none; }
+    .cake-step { min-height: calc(100svh - 144px); display: grid; grid-template-columns: minmax(0, .85fr) minmax(360px, 1.15fr); align-items: center; gap: 20px; padding: 34px 0 48px; }
+    .cake-intro { position: relative; z-index: 1; }
+    .cake-intro h1 { margin: 22px 0 20px; font-size: clamp(52px, 7vw, 82px); }
+    .cake-intro .message { max-width: 390px; }
+    .cake-date, .countdown-date { margin: 24px 0 0; color: var(--rose-dark); font-size: 13px; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; }
+    .cake-stage { position: relative; min-width: 0; height: min(68vh, 560px); min-height: 390px; touch-action: manipulation; }
+    #cake-canvas { display: block; width: 100%; height: 100%; }
+    .cake-stage.intro-playing #cake-canvas, .cake-stage.intro-playing .love-heart { opacity: 0; }
+    .cake-stage.intro-playing #cake-canvas { animation: cake-arrive .65s 1s cubic-bezier(.2,.75,.25,1) both; }
+    .cake-stage.intro-playing .love-heart { animation-play-state: paused; }
+    .love-intro { position: absolute; z-index: 4; inset: 0; pointer-events: none; }
+    .love-intro svg { display: block; width: 100%; height: 100%; overflow: visible; }
+    .intro-arrow, .intro-arrowhead { fill: none; stroke: var(--rose); stroke-linecap: round; stroke-linejoin: round; stroke-width: 5; filter: drop-shadow(0 2px 3px rgba(185, 56, 109, .24)); }
+    .intro-arrow { stroke-dasharray: 1; stroke-dashoffset: 1; animation: arrow-shoot .8s cubic-bezier(.2,.75,.25,1) .15s forwards; }
+    .intro-arrowhead { opacity: 0; animation: arrow-impact .2s .82s forwards; }
+    .intro-heart { fill: var(--rose); opacity: 0; transform-box: fill-box; transform-origin: center; animation: heart-impact .55s .82s cubic-bezier(.2,.75,.25,1) forwards; }
+    @keyframes arrow-shoot { to { stroke-dashoffset: 0; } }
+    @keyframes arrow-impact { to { opacity: 1; } }
+    @keyframes heart-impact { 35% { opacity: 1; transform: scale(1.35); } 100% { opacity: 1; transform: scale(1); } }
+    @keyframes cake-arrive { from { opacity: 0; transform: translateY(14px) scale(.96); } to { opacity: 1; transform: translateY(0) scale(1); } }
+    .love-heart { position: absolute; z-index: 1; color: var(--rose); font: 400 30px/1 Georgia, serif; opacity: .7; pointer-events: none; animation: heart-drift 4s ease-in-out infinite; }
+    .heart-one { top: 16%; left: 18%; font-size: 34px; }
+    .heart-two { top: 28%; right: 12%; animation-delay: -1.7s; }
+    .heart-three { right: 23%; bottom: 20%; font-size: 23px; animation-delay: -2.8s; }
+    @keyframes heart-drift { 50% { transform: translateY(-10px) rotate(8deg); } }
+    .cake-hit { position: absolute; z-index: 2; inset: 12% 8% 17%; border: 0; background: transparent; cursor: pointer; }
+    .cake-hit:focus-visible { outline: 2px solid var(--rose); outline-offset: -10px; }
+    .cake-prompt { position: absolute; z-index: 3; right: 0; bottom: 8px; left: 0; margin: 0; color: var(--muted); font: 500 17px var(--serif); text-align: center; pointer-events: none; }
+    .cake-fallback { position: absolute; inset: 40% 10% auto; color: var(--muted); text-align: center; }
+    .countdown-step { min-height: calc(100svh - 144px); display: grid; place-items: center; padding: 60px 0; text-align: center; }
+    .countdown-content { width: min(760px, 100%); }
+    .countdown-content .eyebrow { justify-content: center; }
+    .countdown-content h2 { margin: 20px 0 0; font: 600 clamp(38px, 6vw, 64px)/1.08 var(--serif); }
+    .countdown-content h2 span { color: var(--rose); }
+    .countdown-date { margin-top: 16px; }
+    .countdown { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 12px; margin: 38px auto 28px; }
+    .count-unit { display: grid; gap: 7px; padding: 17px 8px; border-top: 1px solid var(--rose); border-bottom: 1px solid var(--rose); }
+    .count-unit strong { color: var(--leaf); font: 600 clamp(32px, 6vw, 54px)/1 var(--serif); font-variant-numeric: tabular-nums; }
+    .count-unit span { color: var(--muted); font-size: 11px; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; }
+    .birthday-wish { max-width: 600px; margin: 0 auto; color: var(--muted); font-size: 17px; line-height: 1.8; }
+    .countdown-content .signature { margin-top: 16px; }
+    .countdown-content .actions { justify-content: center; margin-top: 26px; }
+    #memories { margin-top: 20px; }
+    .cake-step, .countdown-step { animation: step-in .65s cubic-bezier(.2,.75,.25,1) both; }
+    @keyframes step-in { from { opacity: 0; transform: translateY(14px); } to { opacity: 1; transform: translateY(0); } }
     .birthday {
       display: grid;
       grid-template-columns: minmax(0, 1fr) minmax(280px, 420px);
@@ -85,12 +132,20 @@
     .memories-heading { display: flex; align-items: end; justify-content: space-between; gap: 20px; margin-bottom: 24px; }
     .memories-heading h2 { margin: 0; font: 600 clamp(30px, 4vw, 42px)/1.15 var(--serif); }
     .memories-heading p { margin: 0; color: var(--muted); font-size: 13px; }
+    .memories-heading .button { flex: 0 0 auto; }
     .gallery-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 190px), 1fr)); gap: 16px; }
-    .gallery-item { position: relative; overflow: hidden; aspect-ratio: 9 / 16; background: #eee2d5; }
-    .gallery-item img { display: block; width: 100%; height: 100%; object-fit: cover; transition: transform .45s ease; }
+    .gallery-note { margin: 30px 0 0; color: var(--rose-dark); font: 500 21px/1.6 var(--serif); text-align: center; white-space: pre-line; }
+    .gallery-note:empty { display: none; }
+    .gallery-item { position: relative; overflow: hidden; margin: 0; background: #fffdf9; }
+    .gallery-item img { display: block; width: 100%; aspect-ratio: 9 / 16; object-fit: cover; transition: transform .45s ease; }
     .gallery-item:hover img { transform: scale(1.035); }
-    .photo-placeholder { position: absolute; inset: 0; display: grid; place-items: center; padding: 12px; color: var(--muted); font: 500 17px var(--serif); text-align: center; }
-    .gallery-item.has-photo .photo-placeholder { display: none; }
+    .gallery-remove { position: absolute; top: 9px; right: 9px; min-height: 34px; padding: 0 10px; border: 0; border-radius: 4px; color: white; background: rgba(37,43,37,.78); font-size: 12px; opacity: 0; transition: opacity .2s; }
+    .gallery-item:hover .gallery-remove, .gallery-remove:focus-visible { opacity: 1; }
+    .gallery-caption { display: block; width: 100%; min-height: 64px; padding: 10px 12px; border: 1px solid var(--line); border-top: 0; border-radius: 0 0 5px 5px; outline: none; color: var(--ink); background: #fffdf9; font: 500 14px/1.5 var(--serif); resize: vertical; }
+    .gallery-caption:focus { border-color: var(--rose); box-shadow: 0 0 0 2px rgba(216,79,135,.12); }
+    .empty-gallery { grid-column: 1 / -1; display: grid; min-height: 150px; place-content: center; gap: 7px; border: 1px dashed #cdbfae; color: var(--muted); text-align: center; }
+    .empty-gallery strong { color: var(--ink); font: 500 20px var(--serif); }
+    .empty-gallery span { font-size: 13px; }
     .footer { display: flex; justify-content: space-between; gap: 16px; padding: 22px 0 28px; border-top: 1px solid var(--line); color: var(--muted); font-size: 12px; }
     .footer span:last-child { color: var(--leaf); }
     dialog { width: min(520px, calc(100% - 28px)); max-height: min(780px, calc(100% - 28px)); padding: 0; border: 1px solid var(--line); border-radius: 8px; color: var(--ink); background: var(--paper); box-shadow: 0 24px 80px rgba(31, 28, 24, .25); }
@@ -108,24 +163,36 @@
     .editor-actions { display: flex; flex-wrap: wrap; justify-content: flex-end; gap: 9px; padding-top: 4px; }
     .toast { position: fixed; right: 20px; bottom: 20px; z-index: 5; max-width: calc(100% - 40px); padding: 12px 16px; border-radius: 5px; color: white; background: #28352a; font-size: 13px; opacity: 0; transform: translateY(8px); transition: opacity .2s, transform .2s; pointer-events: none; }
     .toast.visible { opacity: 1; transform: translateY(0); }
+    #cracker-canvas { position: fixed; inset: 0; z-index: 10; display: none; width: 100vw; height: 100vh; pointer-events: none; }
     @media (max-width: 720px) {
       .page { width: min(100% - 32px, 520px); }
       .topbar { min-height: 72px; }
       .button { min-height: 42px; padding: 0 12px; }
-      .birthday { grid-template-columns: 1fr; gap: 36px; }
-      .copy { padding: 0; }
-      h1 { max-width: 500px; font-size: clamp(48px, 13vw, 68px); }
-      .portrait-wrap { width: min(82%, 350px); justify-self: center; }
+      .cake-step { min-height: auto; grid-template-columns: 1fr; gap: 0; padding: 42px 0 28px; }
+      .cake-intro h1 { font-size: clamp(48px, 13vw, 68px); }
+      .cake-stage { height: min(52vh, 440px); min-height: 300px; margin: -4px -8px 0; }
+      .countdown-step { min-height: calc(100svh - 130px); padding: 48px 0; }
+      .countdown { gap: 7px; margin: 30px auto 24px; }
+      .count-unit { padding: 15px 3px; }
+      .count-unit span { font-size: 9px; }
+      .birthday-wish { font-size: 15px; }
       .memories-heading { align-items: start; flex-direction: column; }
       .gallery-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
-      main { padding: 48px 0 54px; }
+      main { padding-bottom: 40px; }
     }
     @media (max-width: 400px) {
       .top-actions { gap: 6px; }
       .top-actions .button { padding: 0 9px; font-size: 12px; }
       .footer { flex-direction: column; }
     }
-    @media (prefers-reduced-motion: reduce) { *, *::before, *::after { scroll-behavior: auto !important; transition-duration: .01ms !important; animation-duration: .01ms !important; } }
+    @media (hover: none) {
+      .gallery-remove { opacity: 1; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after { scroll-behavior: auto !important; transition-duration: .01ms !important; animation-duration: .01ms !important; }
+      .love-intro { display: none; }
+      .cake-stage.intro-playing #cake-canvas { opacity: 1; transform: none; }
+    }
   </style>
 </head>
 <body>
@@ -139,37 +206,66 @@
     </header>
 
     <main>
-      <article class="birthday" aria-labelledby="birthday-title">
-        <section class="copy">
-          <div class="eyebrow">Today is all about you</div>
-          <h1 id="birthday-title">Happy Birthday,<br><span id="person-name">Pooja</span>!</h1>
-          <p class="message" id="birthday-message">Wishing you a day filled with the people you love, little moments that make you smile, and all the cake you can manage.</p>
-          <p class="signature" id="birthday-sender">With love, your family</p>
-          <div class="actions">
-            <button class="button button-primary" id="whatsapp-button" type="button">Share on WhatsApp</button>
-            <button class="button" id="share-button" type="button">Share this wish</button>
+      <section class="step cake-step" id="cake-step" aria-labelledby="birthday-title">
+          <div class="cake-intro">
+            <div class="eyebrow">A little surprise for you</div>
+            <h1 id="birthday-title">Make a wish,<br><span id="person-name">Poojaa</span>.</h1>
+            <p class="message">A birthday moment made just for you. Tap the cake to blow out the candles.</p>
+            <p class="cake-date" id="cake-date">November 6</p>
+          </div>
+          <div class="cake-stage intro-playing" id="cake-stage">
+            <canvas id="cake-canvas" aria-hidden="true"></canvas>
+            <span class="love-heart heart-one" aria-hidden="true">&#9825;</span>
+            <span class="love-heart heart-two" aria-hidden="true">&#9829;</span>
+            <span class="love-heart heart-three" aria-hidden="true">&#9825;</span>
+            <div class="love-intro" id="love-intro" aria-hidden="true">
+              <svg viewBox="0 0 400 400" preserveAspectRatio="none">
+                <path class="intro-arrow" pathLength="1" d="M78 282 L258 148" />
+                <path class="intro-arrowhead" d="M228 145 L258 148 L247 174" />
+                <path class="intro-heart" d="M278 168 C268 159 257 151 257 138 C257 124 274 119 282 132 C290 119 307 124 307 138 C307 151 296 159 286 168 L282 172 Z" />
+              </svg>
+            </div>
+            <button class="cake-hit" id="blow-button" type="button" aria-label="Tap the cake to blow out the candles" disabled></button>
+            <p class="cake-prompt" id="cake-prompt">Tap the cake to make a wish</p>
+            <p class="cake-fallback" id="cake-fallback" hidden>Turn on your internet connection to see the 3D cake.</p>
           </div>
         </section>
-        <div class="portrait-wrap">
-          <div class="portrait-frame">
-            <img class="portrait" id="birthday-photo" src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&amp;fit=crop&amp;w=1000&amp;q=85" alt="Birthday portrait">
+
+        <section class="step countdown-step" id="countdown-step" aria-labelledby="countdown-title" hidden>
+          <div class="countdown-content">
+            <div class="eyebrow">The candles are out</div>
+            <h2 id="countdown-title">Counting down to<br><span id="countdown-name">Poojaa</span>'s day</h2>
+            <p class="countdown-date" id="countdown-date">November 6</p>
+            <div class="countdown" id="countdown" aria-label="Time remaining until the birthday">
+              <div class="count-unit"><strong id="count-days">00</strong><span>Days</span></div>
+              <div class="count-unit"><strong id="count-hours">00</strong><span>Hours</span></div>
+              <div class="count-unit"><strong id="count-minutes">00</strong><span>Minutes</span></div>
+              <div class="count-unit"><strong id="count-seconds">00</strong><span>Seconds</span></div>
+            </div>
+            <div class="countdown-photo-wrap" id="countdown-photo-wrap" hidden>
+              <img class="countdown-photo" id="birthday-photo" alt="Birthday portrait">
+            </div>
+            <p class="birthday-wish" id="birthday-message">Wishing you a day filled with the people you love, little moments that make you smile, and all the cake you can manage.</p>
+            <p class="signature" id="birthday-sender">With love, your family</p>
+            <div class="actions">
+              <button class="button button-primary" id="whatsapp-button" type="button">Share on WhatsApp</button>
+              <button class="button" id="share-button" type="button">Share this wish</button>
+              <button class="button" id="again-button" type="button">See the cake again</button>
+            </div>
           </div>
-          <div class="photo-note" aria-hidden="true">A day just for you</div>
-        </div>
-      </article>
-      <section class="memories" aria-labelledby="memories-title">
+        </section>
+
+        <section class="memories" id="memories" aria-labelledby="memories-title" hidden>
         <div class="memories-heading">
-          <h2 id="memories-title">Our Memories</h2>
-          <p>Little moments worth keeping close.</p>
+          <div>
+            <h2 id="memories-title">Our Memories</h2>
+            <p>Little moments worth keeping close. Add a caption beneath each photo; photos and captions stay on this device.</p>
+          </div>
+          <button class="button" id="add-photos-button" type="button">Add photos</button>
+          <input id="photo-files" type="file" accept="image/*" multiple hidden>
         </div>
-        <div class="gallery-grid">
-          <figure class="gallery-item"><img src="IMG_7961_4410c0.jpg" alt="A favorite birthday memory" loading="lazy" decoding="async"><figcaption class="photo-placeholder">Photo 1</figcaption></figure>
-          <figure class="gallery-item"><img src="IMG_7960_4410c0.jpg" alt="A favorite birthday memory" loading="lazy" decoding="async"><figcaption class="photo-placeholder">Photo 2</figcaption></figure>
-          <figure class="gallery-item"><img src="IMG_7959_4410c0.jpg" alt="A favorite birthday memory" loading="lazy" decoding="async"><figcaption class="photo-placeholder">Photo 3</figcaption></figure>
-          <figure class="gallery-item"><img src="IMG_7958_4410c0.jpg" alt="A favorite birthday memory" loading="lazy" decoding="async"><figcaption class="photo-placeholder">Photo 4</figcaption></figure>
-          <figure class="gallery-item"><img src="IMG_7956_4410c0.jpg" alt="A favorite birthday memory" loading="lazy" decoding="async"><figcaption class="photo-placeholder">Photo 5</figcaption></figure>
-          <figure class="gallery-item"><img src="IMG_7955_4410c0.jpg" alt="A favorite birthday memory" loading="lazy" decoding="async"><figcaption class="photo-placeholder">Photo 6</figcaption></figure>
-        </div>
+        <div class="gallery-grid" id="gallery-grid" aria-live="polite"></div>
+        <p class="gallery-note" id="gallery-note"></p>
       </section>
     </main>
 
@@ -198,6 +294,14 @@
         <input id="input-sender" name="sender" maxlength="80" required>
       </div>
       <div class="field">
+        <label for="input-birthday">Birthday date</label>
+        <input id="input-birthday" name="birthday" type="date" required>
+      </div>
+      <div class="field">
+        <label for="input-gallery-note">Note beneath the photos</label>
+        <textarea id="input-gallery-note" name="galleryNote" maxlength="300" placeholder="Write a few extra birthday words"></textarea>
+      </div>
+      <div class="field">
         <label for="input-photo">Photo link</label>
         <input id="input-photo" name="photo" type="url" inputmode="url" placeholder="https://example.com/photo.jpg">
         <small>Use a public image link so the photo appears for everyone who opens your shared page.</small>
@@ -208,27 +312,351 @@
       </div>
     </form>
   </dialog>
+  <canvas id="cracker-canvas" aria-hidden="true"></canvas>
   <div class="toast" id="toast" role="status" aria-live="polite"></div>
 
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
   <script>
     (() => {
       const defaults = {
-        name: 'Pooja',
+        name: 'Poojaa',
         message: 'Wishing you a day filled with the people you love, little moments that make you smile, and all the cake you can manage.',
         sender: 'your family',
-        photo: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=1000&q=85'
+        birthday: '2000-11-06',
+        galleryNote: 'May the year ahead bring you all the love and joy you deserve.',
+        photo: ''
       };
       const storageKey = 'birthday-wish-settings-v1';
-      const fields = ['name', 'message', 'sender', 'photo'];
+      const galleryStorageKey = 'birthday-wish-gallery-v1';
+      const fields = ['name', 'message', 'sender', 'birthday', 'galleryNote', 'photo'];
       const editor = document.querySelector('#editor');
       const form = document.querySelector('#editor-form');
+      const gallery = document.querySelector('#gallery-grid');
+      const photoFiles = document.querySelector('#photo-files');
+      const cakeStep = document.querySelector('#cake-step');
+      const cakeStage = document.querySelector('#cake-stage');
+      const loveIntro = document.querySelector('#love-intro');
+      const countdownStep = document.querySelector('#countdown-step');
+      const memories = document.querySelector('#memories');
+      let countdownTimer;
       let toastTimer;
+      let extinguishCake = () => {};
+      let relightCake = () => {};
 
-      document.querySelectorAll('.gallery-item img').forEach((image) => {
-        const showPhoto = () => image.closest('.gallery-item').classList.add('has-photo');
-        if (image.complete && image.naturalWidth > 0) showPhoto();
-        image.addEventListener('load', showPhoto);
+      function blastCrackers() {
+        const canvas = document.querySelector('#cracker-canvas');
+        const context = canvas.getContext('2d');
+        if (!context) return 0;
+        const pixelRatio = Math.min(window.devicePixelRatio || 1, 2);
+        const width = window.innerWidth;
+        const height = window.innerHeight;
+        canvas.width = Math.round(width * pixelRatio);
+        canvas.height = Math.round(height * pixelRatio);
+        canvas.style.display = 'block';
+        context.setTransform(pixelRatio, 0, 0, pixelRatio, 0, 0);
+
+        const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+        const particleCount = reducedMotion ? 32 : 125;
+        const bursts = [0.12, 0.31, 0.5, 0.69, 0.88];
+        const colors = ['#e74882', '#ff8fb7', '#ffd166', '#ff4f76', '#fff0a8'];
+        const particles = [];
+
+        bursts.forEach((horizontalPosition, burstIndex) => {
+          const centerX = width * horizontalPosition;
+          const centerY = height * (0.18 + Math.random() * 0.38);
+          for (let index = 0; index < particleCount; index += 1) {
+            const angle = Math.random() * Math.PI * 2;
+            const speed = 1.4 + Math.random() * (reducedMotion ? 3 : 6.5);
+            particles.push({
+              x: centerX,
+              y: centerY,
+              velocityX: Math.cos(angle) * speed,
+              velocityY: Math.sin(angle) * speed,
+              color: colors[(burstIndex + Math.floor(Math.random() * 3)) % colors.length],
+              radius: 1.2 + Math.random() * (reducedMotion ? 1.2 : 2.8),
+              life: reducedMotion ? 24 + Math.random() * 12 : 62 + Math.random() * 36,
+              age: 0
+            });
+          }
+        });
+
+        let frame = 0;
+        function draw() {
+          context.clearRect(0, 0, width, height);
+          particles.forEach((particle) => {
+            if (particle.age >= particle.life) return;
+            const previousX = particle.x;
+            const previousY = particle.y;
+            particle.x += particle.velocityX;
+            particle.y += particle.velocityY;
+            particle.velocityY += 0.045;
+            particle.velocityX *= 0.99;
+            particle.age += 1;
+
+            context.globalAlpha = Math.max(0, 1 - particle.age / particle.life);
+            context.strokeStyle = particle.color;
+            context.lineWidth = particle.radius;
+            context.beginPath();
+            context.moveTo(previousX, previousY);
+            context.lineTo(particle.x, particle.y);
+            context.stroke();
+            context.fillStyle = '#fff8ed';
+            context.beginPath();
+            context.arc(particle.x, particle.y, particle.radius * 0.55, 0, Math.PI * 2);
+            context.fill();
+          });
+          context.globalAlpha = 1;
+          frame += 1;
+          if (frame < (reducedMotion ? 38 : 105)) {
+            requestAnimationFrame(draw);
+          } else {
+            context.clearRect(0, 0, width, height);
+            canvas.style.display = 'none';
+          }
+        }
+        requestAnimationFrame(draw);
+        return reducedMotion ? 650 : 1900;
+      }
+
+      function initCake() {
+        const canvas = document.querySelector('#cake-canvas');
+        if (!window.THREE) {
+          document.querySelector('#cake-fallback').hidden = false;
+          return;
+        }
+        try {
+          const scene = new THREE.Scene();
+          const camera = new THREE.PerspectiveCamera(32, 1, 0.1, 100);
+          camera.position.set(0, 3.8, 8.6);
+          camera.lookAt(0, 1.15, 0);
+          const renderer = new THREE.WebGLRenderer({ canvas, alpha: true, antialias: true });
+          renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
+          renderer.setClearColor(0x000000, 0);
+          renderer.shadowMap.enabled = true;
+          renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+
+          const cake = new THREE.Group();
+          scene.add(cake);
+          scene.add(new THREE.HemisphereLight(0xfff0f6, 0x704152, 2.2));
+          const keyLight = new THREE.DirectionalLight(0xffffff, 3.2);
+          keyLight.position.set(-3, 7, 5);
+          keyLight.castShadow = true;
+          scene.add(keyLight);
+          const candleLight = new THREE.PointLight(0xffb05f, 1.4, 8);
+          candleLight.position.set(0, 2.5, 0);
+          scene.add(candleLight);
+
+          const material = (color, roughness = 0.42, metalness = 0) => new THREE.MeshStandardMaterial({ color, roughness, metalness });
+          const basePink = material(0xe989ae);
+          const icingPink = material(0xffc7dc, 0.28);
+          const lightPink = material(0xffe6ef, 0.3);
+          const cream = material(0xfff5e8, 0.36);
+          const gold = material(0xd9a85d, 0.24, 0.72);
+          const candleWax = material(0xfff2d9, 0.32);
+          const ground = new THREE.Mesh(new THREE.CircleGeometry(2.6, 64), material(0xf8dce7, 0.8));
+          ground.rotation.x = -Math.PI / 2;
+          ground.position.y = -0.02;
+          ground.receiveShadow = true;
+          scene.add(ground);
+
+          function addCakePart(geometry, partMaterial, y, target = cake) {
+            const mesh = new THREE.Mesh(geometry, partMaterial);
+            mesh.position.y = y;
+            mesh.castShadow = true;
+            mesh.receiveShadow = true;
+            target.add(mesh);
+            return mesh;
+          }
+
+          addCakePart(new THREE.CylinderGeometry(1.72, 1.82, 0.2, 64), gold, 0.12);
+          addCakePart(new THREE.CylinderGeometry(1.58, 1.7, 0.78, 64), basePink, 0.58);
+          addCakePart(new THREE.CylinderGeometry(1.62, 1.72, 0.12, 64), icingPink, 1.0);
+          addCakePart(new THREE.CylinderGeometry(1.12, 1.2, 0.62, 64), lightPink, 1.38);
+          addCakePart(new THREE.CylinderGeometry(1.16, 1.23, 0.11, 64), cream, 1.73);
+          addCakePart(new THREE.CylinderGeometry(1.03, 1.08, 0.05, 64), icingPink, 1.81);
+
+          for (let index = 0; index < 18; index += 1) {
+            const angle = (index / 18) * Math.PI * 2;
+            const drip = new THREE.Mesh(new THREE.SphereGeometry(0.09, 12, 10), icingPink);
+            drip.position.set(Math.cos(angle) * 1.16, 1.67 - (index % 3) * 0.025, Math.sin(angle) * 1.16);
+            drip.scale.set(1, 1.35, 1);
+            cake.add(drip);
+          }
+
+          const candleSpots = [[0, 0], [-0.48, 0.16], [0.48, 0.16], [-0.26, -0.43], [0.26, -0.43]];
+          const flames = [];
+          candleSpots.forEach(([x, z], index) => {
+            const candle = new THREE.Mesh(new THREE.CylinderGeometry(0.055, 0.065, 0.43, 16), index % 2 ? candleWax : cream);
+            candle.position.set(x, 2.04, z);
+            candle.castShadow = true;
+            cake.add(candle);
+            const flame = new THREE.Mesh(new THREE.SphereGeometry(0.085, 16, 12), material(0xffa43d, 0.25, 0));
+            flame.position.set(x, 2.31, z);
+            flame.scale.set(0.78, 1.55, 0.78);
+            cake.add(flame);
+            flames.push(flame);
+          });
+          extinguishCake = () => {
+            flames.forEach((flame) => { flame.visible = false; });
+            candleLight.intensity = 0;
+          };
+          relightCake = () => {
+            flames.forEach((flame) => { flame.visible = true; });
+            candleLight.intensity = 1.4;
+          };
+
+          const resize = () => {
+            const width = Math.max(1, canvas.clientWidth);
+            const height = Math.max(1, canvas.clientHeight);
+            camera.aspect = width / height;
+            camera.updateProjectionMatrix();
+            renderer.setSize(width, height, false);
+            renderer.render(scene, camera);
+          };
+          new ResizeObserver(resize).observe(canvas);
+          resize();
+          const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+          function animate() {
+            if (!reducedMotion) {
+              cake.rotation.y += 0.003;
+              const pulse = 1 + Math.sin(Date.now() / 120) * 0.08;
+              flames.forEach((flame) => { if (flame.visible) flame.scale.y = 1.55 * pulse; });
+            }
+            renderer.render(scene, camera);
+            if (!reducedMotion) requestAnimationFrame(animate);
+          }
+          animate();
+        } catch {
+          document.querySelector('#cake-fallback').hidden = false;
+        }
+      }
+
+      function readGallery() {
+        try {
+          const photos = JSON.parse(localStorage.getItem(galleryStorageKey) || '[]');
+          return Array.isArray(photos) ? photos.flatMap((photo) => {
+            if (typeof photo === 'string' && photo.startsWith('data:image/')) return [{ source: photo, caption: '' }];
+            if (photo && typeof photo.source === 'string' && photo.source.startsWith('data:image/')) {
+              return [{ source: photo.source, caption: typeof photo.caption === 'string' ? photo.caption : '' }];
+            }
+            return [];
+          }) : [];
+        } catch { return []; }
+      }
+
+      function renderGallery() {
+        const photos = readGallery();
+        gallery.replaceChildren();
+        if (!photos.length) {
+          const empty = document.createElement('div');
+          empty.className = 'empty-gallery';
+          empty.innerHTML = '<strong>Your photos will live here</strong><span>Add favorite moments from this device to begin.</span>';
+          gallery.append(empty);
+          return;
+        }
+        photos.forEach((photo, index) => {
+          const figure = document.createElement('figure');
+          figure.className = 'gallery-item';
+          const image = document.createElement('img');
+          image.src = photo.source;
+          image.alt = `Birthday memory ${index + 1}`;
+          image.loading = 'lazy';
+          image.decoding = 'async';
+          const caption = document.createElement('textarea');
+          caption.className = 'gallery-caption';
+          caption.maxLength = 300;
+          caption.rows = 2;
+          caption.value = photo.caption;
+          caption.placeholder = 'Add a caption...';
+          caption.setAttribute('aria-label', `Caption for birthday memory ${index + 1}`);
+          caption.addEventListener('input', () => {
+            const updated = readGallery();
+            if (!updated[index]) return;
+            updated[index].caption = caption.value;
+            try {
+              localStorage.setItem(galleryStorageKey, JSON.stringify(updated));
+            } catch {
+              notify('Could not save this caption. Your browser storage may be full.');
+            }
+          });
+          const remove = document.createElement('button');
+          remove.className = 'gallery-remove';
+          remove.type = 'button';
+          remove.textContent = 'Remove';
+          remove.setAttribute('aria-label', `Remove birthday memory ${index + 1}`);
+          remove.addEventListener('click', () => {
+            const updated = readGallery();
+            updated.splice(index, 1);
+            try {
+              localStorage.setItem(galleryStorageKey, JSON.stringify(updated));
+              renderGallery();
+            } catch {
+              notify('Could not remove this photo. Your browser storage may be unavailable.');
+            }
+          });
+          figure.append(image, caption, remove);
+          gallery.append(figure);
+        });
+      }
+
+      function resizePhoto(file) {
+        return new Promise((resolve, reject) => {
+          const image = new Image();
+          const objectUrl = URL.createObjectURL(file);
+          image.onload = () => {
+            try {
+              const scale = Math.min(1, 1400 / Math.max(image.naturalWidth, image.naturalHeight));
+              const canvas = document.createElement('canvas');
+              canvas.width = Math.round(image.naturalWidth * scale);
+              canvas.height = Math.round(image.naturalHeight * scale);
+              const context = canvas.getContext('2d');
+              if (!context) throw new Error('Could not prepare this image.');
+              context.drawImage(image, 0, 0, canvas.width, canvas.height);
+              resolve(canvas.toDataURL('image/jpeg', 0.82));
+            } catch (error) {
+              reject(error);
+            } finally {
+              URL.revokeObjectURL(objectUrl);
+            }
+          };
+          image.onerror = () => {
+            URL.revokeObjectURL(objectUrl);
+            reject(new Error('This image could not be opened.'));
+          };
+          image.src = objectUrl;
+        });
+      }
+
+      document.querySelector('#add-photos-button').addEventListener('click', () => photoFiles.click());
+      photoFiles.addEventListener('change', async () => {
+        const selectedFiles = Array.from(photoFiles.files || []).filter((file) => file.type.startsWith('image/'));
+        if (!selectedFiles.length) {
+          photoFiles.value = '';
+          return;
+        }
+        const existing = readGallery();
+        const availableSlots = Math.max(0, 12 - existing.length);
+        if (!availableSlots) {
+          notify('You can add up to 12 photos. Remove a photo before adding another.');
+          photoFiles.value = '';
+          return;
+        }
+        const files = selectedFiles.slice(0, availableSlots);
+        try {
+          const photos = await Promise.all(files.map(resizePhoto));
+          localStorage.setItem(galleryStorageKey, JSON.stringify([
+            ...existing,
+            ...photos.map((source) => ({ source, caption: '' }))
+          ]));
+          renderGallery();
+          notify(selectedFiles.length > files.length ? 'Added up to 12 photos. Extra selections were skipped.' : 'Photos added on this device.');
+        } catch {
+          notify('Could not save these photos. Try selecting fewer or smaller images.');
+        } finally {
+          photoFiles.value = '';
+        }
       });
+      renderGallery();
 
       function readSettings() {
         const params = new URLSearchParams(window.location.search);
@@ -237,18 +665,59 @@
         if (!hasSharedSettings) {
           try { saved = JSON.parse(localStorage.getItem(storageKey) || '{}'); } catch { saved = {}; }
         }
-        return Object.fromEntries(fields.map((field) => [field, params.has(field) ? params.get(field) : (saved[field] || defaults[field])]));
+        if (saved.name === 'Pooja') saved.name = defaults.name;
+        if (saved.photo && saved.photo.includes('photo-1534528741775-53994a69daeb')) saved.photo = '';
+        return Object.fromEntries(fields.map((field) => [field, params.has(field) ? params.get(field) : (saved[field] ?? defaults[field])]));
+      }
+
+      function updateCountdown(birthday, name) {
+        const [, month, day] = birthday.split('-').map(Number);
+        const now = new Date();
+        const isBirthday = now.getMonth() === month - 1 && now.getDate() === day;
+        const target = new Date(now.getFullYear(), month - 1, day);
+        if (!isBirthday && target < now) target.setFullYear(target.getFullYear() + 1);
+        const remaining = isBirthday ? 0 : Math.max(0, target.getTime() - now.getTime());
+        const units = [
+          Math.floor(remaining / 86400000),
+          Math.floor((remaining % 86400000) / 3600000),
+          Math.floor((remaining % 3600000) / 60000),
+          Math.floor((remaining % 60000) / 1000)
+        ];
+        ['days', 'hours', 'minutes', 'seconds'].forEach((unit, index) => {
+          document.querySelector(`#count-${unit}`).textContent = String(units[index]).padStart(2, '0');
+        });
+        const title = document.querySelector('#countdown-title');
+        title.replaceChildren();
+        if (isBirthday) {
+          title.textContent = `Happy Birthday, ${name}!`;
+          document.querySelector('#countdown-date').textContent = 'Today is your day';
+        } else {
+          title.append('Counting down to');
+          title.append(document.createElement('br'));
+          const nameElement = document.createElement('span');
+          nameElement.textContent = name;
+          title.append(nameElement, document.createTextNode("'s day"));
+        }
       }
 
       function applySettings(settings) {
         document.title = `A birthday wish for ${settings.name}`;
         document.querySelector('#person-name').textContent = settings.name;
+        document.querySelector('#countdown-name').textContent = settings.name;
         document.querySelector('#birthday-message').textContent = settings.message;
         document.querySelector('#birthday-sender').textContent = `With love, ${settings.sender}`;
+        document.querySelector('#gallery-note').textContent = settings.galleryNote;
+        const parts = settings.birthday.split('-').map(Number);
+        const birthdayLabel = new Intl.DateTimeFormat(undefined, { month: 'long', day: 'numeric' }).format(new Date(2000, parts[1] - 1, parts[2]));
+        document.querySelector('#cake-date').textContent = birthdayLabel;
+        document.querySelector('#countdown-date').textContent = birthdayLabel;
         const photo = document.querySelector('#birthday-photo');
-        photo.src = settings.photo || defaults.photo;
+        const photoWrap = document.querySelector('#countdown-photo-wrap');
+        photoWrap.hidden = !settings.photo;
+        if (settings.photo) photo.src = settings.photo;
         photo.alt = `Birthday portrait for ${settings.name}`;
-        for (const field of fields) form.elements[field].value = settings[field];
+        for (const field of fields) form.elements[field].value = settings[field] || '';
+        updateCountdown(settings.birthday, settings.name);
       }
 
       function currentSettings() {
@@ -287,6 +756,30 @@
       document.querySelector('#close-editor').addEventListener('click', () => editor.close());
       document.querySelector('#cancel-editor').addEventListener('click', () => editor.close());
       document.querySelector('#copy-button').addEventListener('click', copyLink);
+      document.querySelector('#blow-button').addEventListener('click', (event) => {
+        const button = event.currentTarget;
+        if (button.disabled) return;
+        button.disabled = true;
+        extinguishCake();
+        const blastDuration = blastCrackers();
+        document.querySelector('#cake-prompt').textContent = 'Your wish is on its way...';
+        window.setTimeout(() => {
+          cakeStep.hidden = true;
+          countdownStep.hidden = false;
+          memories.hidden = false;
+          window.scrollTo({ top: 0, behavior: 'smooth' });
+        }, blastDuration || 650);
+      });
+      document.querySelector('#again-button').addEventListener('click', () => {
+        countdownStep.hidden = true;
+        memories.hidden = true;
+        cakeStep.hidden = false;
+        const button = document.querySelector('#blow-button');
+        button.disabled = false;
+        document.querySelector('#cake-prompt').textContent = 'Tap the cake to make a wish';
+        relightCake();
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      });
       document.querySelector('#whatsapp-button').addEventListener('click', () => {
         const settings = readSettings();
         const text = `A birthday wish for ${settings.name}: ${shareUrl(settings)}`;
@@ -314,6 +807,17 @@
       });
 
       applySettings(readSettings());
+      initCake();
+      const introDelay = window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 0 : 1750;
+      window.setTimeout(() => {
+        cakeStage.classList.remove('intro-playing');
+        loveIntro.hidden = true;
+        document.querySelector('#blow-button').disabled = false;
+      }, introDelay);
+      countdownTimer = window.setInterval(() => {
+        const settings = readSettings();
+        updateCountdown(settings.birthday, settings.name);
+      }, 1000);
     })();
   </script>
 </body>
