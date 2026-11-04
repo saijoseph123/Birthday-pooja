@@ -1,0 +1,320 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#fff8f1">
+  <meta name="description" content="A little birthday love, made just for you.">
+  <title>A birthday wish for Pooja</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      color-scheme: light;
+      --paper: #fff8f1;
+      --ink: #252b25;
+      --muted: #6f746b;
+      --rose: #c34f61;
+      --rose-dark: #a63e50;
+      --leaf: #526d52;
+      --line: #e9ded2;
+      --serif: 'Playfair Display', Georgia, serif;
+      --sans: 'DM Sans', sans-serif;
+    }
+
+    * { box-sizing: border-box; }
+    body {
+      min-width: 320px;
+      min-height: 100vh;
+      margin: 0;
+      color: var(--ink);
+      background-color: var(--paper);
+      background-image: radial-gradient(#d7bda4 0.65px, transparent 0.65px);
+      background-size: 18px 18px;
+      font-family: var(--sans);
+    }
+    button, input, textarea { font: inherit; }
+    button { cursor: pointer; }
+    .page { width: min(1120px, 100% - 48px); margin: 0 auto; }
+    .topbar {
+      min-height: 88px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-bottom: 1px solid var(--line);
+    }
+    .wordmark { font-size: 13px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; }
+    .wordmark span { color: var(--rose); }
+    .top-actions { display: flex; align-items: center; gap: 10px; }
+    .button {
+      min-height: 44px;
+      padding: 0 17px;
+      border: 1px solid var(--line);
+      border-radius: 6px;
+      color: var(--ink);
+      background: rgba(255,255,255,.62);
+      font-size: 13px;
+      font-weight: 600;
+      transition: background .2s ease, transform .2s ease;
+    }
+    .button:hover { transform: translateY(-1px); background: white; }
+    .button-primary { border-color: var(--rose); color: white; background: var(--rose); }
+    .button-primary:hover { background: var(--rose-dark); }
+    main { padding: clamp(42px, 8vh, 92px) 0 70px; }
+    .birthday {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) minmax(280px, 420px);
+      align-items: center;
+      gap: clamp(36px, 8vw, 110px);
+    }
+    .copy { position: relative; z-index: 1; padding: 14px 0; }
+    .eyebrow { display: flex; align-items: center; gap: 11px; color: var(--leaf); font-size: 12px; font-weight: 700; letter-spacing: .16em; text-transform: uppercase; }
+    .eyebrow::before { width: 30px; height: 1px; content: ''; background: var(--leaf); }
+    h1 { max-width: 620px; margin: 24px 0 20px; font: 600 clamp(48px, 7vw, 82px)/1.04 var(--serif); letter-spacing: 0; }
+    h1 span { color: var(--rose); }
+    .message { max-width: 510px; margin: 0; color: var(--muted); font-size: clamp(16px, 2vw, 19px); line-height: 1.8; white-space: pre-line; }
+    .signature { margin-top: 24px; color: var(--leaf); font: 500 23px var(--serif); }
+    .actions { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 32px; }
+    .portrait-wrap { position: relative; max-width: 420px; width: 100%; justify-self: end; }
+    .portrait-frame { position: relative; aspect-ratio: 4 / 5; padding: 11px; background: #fffdf9; box-shadow: 0 22px 65px rgba(67, 49, 37, .16); transform: rotate(2deg); }
+    .portrait-frame::after { position: absolute; inset: 11px; border: 1px solid rgba(255,255,255,.48); content: ''; pointer-events: none; }
+    .portrait { display: block; width: 100%; height: 100%; object-fit: cover; background: #e8d4c3; }
+    .photo-note { position: absolute; right: -15px; bottom: 34px; padding: 12px 17px; color: var(--ink); background: #f3d9a5; box-shadow: 0 6px 18px rgba(67,49,37,.12); font: 500 16px var(--serif); transform: rotate(-4deg); }
+    .memories { margin-top: clamp(70px, 11vw, 130px); padding-top: 32px; border-top: 1px solid var(--line); }
+    .memories-heading { display: flex; align-items: end; justify-content: space-between; gap: 20px; margin-bottom: 24px; }
+    .memories-heading h2 { margin: 0; font: 600 clamp(30px, 4vw, 42px)/1.15 var(--serif); }
+    .memories-heading p { margin: 0; color: var(--muted); font-size: 13px; }
+    .gallery-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 190px), 1fr)); gap: 16px; }
+    .gallery-item { position: relative; overflow: hidden; aspect-ratio: 9 / 16; background: #eee2d5; }
+    .gallery-item img { display: block; width: 100%; height: 100%; object-fit: cover; transition: transform .45s ease; }
+    .gallery-item:hover img { transform: scale(1.035); }
+    .photo-placeholder { position: absolute; inset: 0; display: grid; place-items: center; padding: 12px; color: var(--muted); font: 500 17px var(--serif); text-align: center; }
+    .gallery-item.has-photo .photo-placeholder { display: none; }
+    .footer { display: flex; justify-content: space-between; gap: 16px; padding: 22px 0 28px; border-top: 1px solid var(--line); color: var(--muted); font-size: 12px; }
+    .footer span:last-child { color: var(--leaf); }
+    dialog { width: min(520px, calc(100% - 28px)); max-height: min(780px, calc(100% - 28px)); padding: 0; border: 1px solid var(--line); border-radius: 8px; color: var(--ink); background: var(--paper); box-shadow: 0 24px 80px rgba(31, 28, 24, .25); }
+    dialog::backdrop { background: rgba(31, 35, 29, .45); backdrop-filter: blur(3px); }
+    .editor-head { display: flex; justify-content: space-between; align-items: center; padding: 22px 24px; border-bottom: 1px solid var(--line); }
+    .editor-head h2 { margin: 0; font: 600 24px var(--serif); }
+    .close-button { width: 36px; height: 36px; border: 1px solid var(--line); border-radius: 50%; color: var(--ink); background: transparent; font-size: 21px; }
+    .editor-form { display: grid; gap: 16px; padding: 22px 24px 24px; }
+    .field { display: grid; gap: 7px; }
+    .field label { font-size: 13px; font-weight: 700; }
+    .field input, .field textarea { width: 100%; min-height: 44px; padding: 11px 12px; border: 1px solid #d8cbbf; border-radius: 5px; outline: none; color: var(--ink); background: #fffdf9; }
+    .field textarea { min-height: 104px; resize: vertical; line-height: 1.5; }
+    .field input:focus, .field textarea:focus { border-color: var(--leaf); box-shadow: 0 0 0 3px rgba(82,109,82,.12); }
+    .field small { color: var(--muted); font-size: 12px; line-height: 1.5; }
+    .editor-actions { display: flex; flex-wrap: wrap; justify-content: flex-end; gap: 9px; padding-top: 4px; }
+    .toast { position: fixed; right: 20px; bottom: 20px; z-index: 5; max-width: calc(100% - 40px); padding: 12px 16px; border-radius: 5px; color: white; background: #28352a; font-size: 13px; opacity: 0; transform: translateY(8px); transition: opacity .2s, transform .2s; pointer-events: none; }
+    .toast.visible { opacity: 1; transform: translateY(0); }
+    @media (max-width: 720px) {
+      .page { width: min(100% - 32px, 520px); }
+      .topbar { min-height: 72px; }
+      .button { min-height: 42px; padding: 0 12px; }
+      .birthday { grid-template-columns: 1fr; gap: 36px; }
+      .copy { padding: 0; }
+      h1 { max-width: 500px; font-size: clamp(48px, 13vw, 68px); }
+      .portrait-wrap { width: min(82%, 350px); justify-self: center; }
+      .memories-heading { align-items: start; flex-direction: column; }
+      .gallery-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
+      main { padding: 48px 0 54px; }
+    }
+    @media (max-width: 400px) {
+      .top-actions { gap: 6px; }
+      .top-actions .button { padding: 0 9px; font-size: 12px; }
+      .footer { flex-direction: column; }
+    }
+    @media (prefers-reduced-motion: reduce) { *, *::before, *::after { scroll-behavior: auto !important; transition-duration: .01ms !important; animation-duration: .01ms !important; } }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <header class="topbar">
+      <div class="wordmark">A little <span>celebration</span></div>
+      <div class="top-actions">
+        <button class="button" id="copy-button" type="button">Copy link</button>
+        <button class="button button-primary" id="edit-button" type="button">Edit this page</button>
+      </div>
+    </header>
+
+    <main>
+      <article class="birthday" aria-labelledby="birthday-title">
+        <section class="copy">
+          <div class="eyebrow">Today is all about you</div>
+          <h1 id="birthday-title">Happy Birthday,<br><span id="person-name">Pooja</span>!</h1>
+          <p class="message" id="birthday-message">Wishing you a day filled with the people you love, little moments that make you smile, and all the cake you can manage.</p>
+          <p class="signature" id="birthday-sender">With love, your family</p>
+          <div class="actions">
+            <button class="button button-primary" id="whatsapp-button" type="button">Share on WhatsApp</button>
+            <button class="button" id="share-button" type="button">Share this wish</button>
+          </div>
+        </section>
+        <div class="portrait-wrap">
+          <div class="portrait-frame">
+            <img class="portrait" id="birthday-photo" src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&amp;fit=crop&amp;w=1000&amp;q=85" alt="Birthday portrait">
+          </div>
+          <div class="photo-note" aria-hidden="true">A day just for you</div>
+        </div>
+      </article>
+      <section class="memories" aria-labelledby="memories-title">
+        <div class="memories-heading">
+          <h2 id="memories-title">Our Memories</h2>
+          <p>Little moments worth keeping close.</p>
+        </div>
+        <div class="gallery-grid">
+          <figure class="gallery-item"><img src="IMG_7961_4410c0.jpg" alt="A favorite birthday memory" loading="lazy" decoding="async"><figcaption class="photo-placeholder">Photo 1</figcaption></figure>
+          <figure class="gallery-item"><img src="IMG_7960_4410c0.jpg" alt="A favorite birthday memory" loading="lazy" decoding="async"><figcaption class="photo-placeholder">Photo 2</figcaption></figure>
+          <figure class="gallery-item"><img src="IMG_7959_4410c0.jpg" alt="A favorite birthday memory" loading="lazy" decoding="async"><figcaption class="photo-placeholder">Photo 3</figcaption></figure>
+          <figure class="gallery-item"><img src="IMG_7958_4410c0.jpg" alt="A favorite birthday memory" loading="lazy" decoding="async"><figcaption class="photo-placeholder">Photo 4</figcaption></figure>
+          <figure class="gallery-item"><img src="IMG_7956_4410c0.jpg" alt="A favorite birthday memory" loading="lazy" decoding="async"><figcaption class="photo-placeholder">Photo 5</figcaption></figure>
+          <figure class="gallery-item"><img src="IMG_7955_4410c0.jpg" alt="A favorite birthday memory" loading="lazy" decoding="async"><figcaption class="photo-placeholder">Photo 6</figcaption></figure>
+        </div>
+      </section>
+    </main>
+
+    <footer class="footer">
+      <span>A birthday wish made with love.</span>
+      <span>Made to be shared.</span>
+    </footer>
+  </div>
+
+  <dialog id="editor" aria-labelledby="editor-title">
+    <div class="editor-head">
+      <h2 id="editor-title">Make it yours</h2>
+      <button class="close-button" id="close-editor" type="button" aria-label="Close editor">&times;</button>
+    </div>
+    <form class="editor-form" id="editor-form">
+      <div class="field">
+        <label for="input-name">Birthday person's name</label>
+        <input id="input-name" name="name" maxlength="60" required>
+      </div>
+      <div class="field">
+        <label for="input-message">Birthday message</label>
+        <textarea id="input-message" name="message" maxlength="500" required></textarea>
+      </div>
+      <div class="field">
+        <label for="input-sender">Sign-off</label>
+        <input id="input-sender" name="sender" maxlength="80" required>
+      </div>
+      <div class="field">
+        <label for="input-photo">Photo link</label>
+        <input id="input-photo" name="photo" type="url" inputmode="url" placeholder="https://example.com/photo.jpg">
+        <small>Use a public image link so the photo appears for everyone who opens your shared page.</small>
+      </div>
+      <div class="editor-actions">
+        <button class="button" id="cancel-editor" type="button">Cancel</button>
+        <button class="button button-primary" type="submit">Save changes</button>
+      </div>
+    </form>
+  </dialog>
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+  <script>
+    (() => {
+      const defaults = {
+        name: 'Pooja',
+        message: 'Wishing you a day filled with the people you love, little moments that make you smile, and all the cake you can manage.',
+        sender: 'your family',
+        photo: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=1000&q=85'
+      };
+      const storageKey = 'birthday-wish-settings-v1';
+      const fields = ['name', 'message', 'sender', 'photo'];
+      const editor = document.querySelector('#editor');
+      const form = document.querySelector('#editor-form');
+      let toastTimer;
+
+      document.querySelectorAll('.gallery-item img').forEach((image) => {
+        const showPhoto = () => image.closest('.gallery-item').classList.add('has-photo');
+        if (image.complete && image.naturalWidth > 0) showPhoto();
+        image.addEventListener('load', showPhoto);
+      });
+
+      function readSettings() {
+        const params = new URLSearchParams(window.location.search);
+        const hasSharedSettings = fields.some((field) => params.has(field));
+        let saved = {};
+        if (!hasSharedSettings) {
+          try { saved = JSON.parse(localStorage.getItem(storageKey) || '{}'); } catch { saved = {}; }
+        }
+        return Object.fromEntries(fields.map((field) => [field, params.has(field) ? params.get(field) : (saved[field] || defaults[field])]));
+      }
+
+      function applySettings(settings) {
+        document.title = `A birthday wish for ${settings.name}`;
+        document.querySelector('#person-name').textContent = settings.name;
+        document.querySelector('#birthday-message').textContent = settings.message;
+        document.querySelector('#birthday-sender').textContent = `With love, ${settings.sender}`;
+        const photo = document.querySelector('#birthday-photo');
+        photo.src = settings.photo || defaults.photo;
+        photo.alt = `Birthday portrait for ${settings.name}`;
+        for (const field of fields) form.elements[field].value = settings[field];
+      }
+
+      function currentSettings() {
+        return Object.fromEntries(fields.map((field) => [field, form.elements[field].value.trim()]));
+      }
+
+      function shareUrl(settings) {
+        const url = new URL(window.location.href);
+        url.search = '';
+        url.hash = '';
+        for (const field of fields) {
+          if (settings[field] && settings[field] !== defaults[field]) url.searchParams.set(field, settings[field]);
+        }
+        return url.toString();
+      }
+
+      function notify(message) {
+        const toast = document.querySelector('#toast');
+        toast.textContent = message;
+        toast.classList.add('visible');
+        window.clearTimeout(toastTimer);
+        toastTimer = window.setTimeout(() => toast.classList.remove('visible'), 2600);
+      }
+
+      async function copyLink() {
+        const link = shareUrl(readSettings());
+        try {
+          await navigator.clipboard.writeText(link);
+          notify('Your birthday link is copied.');
+        } catch {
+          window.prompt('Copy your birthday link:', link);
+        }
+      }
+
+      document.querySelector('#edit-button').addEventListener('click', () => editor.showModal());
+      document.querySelector('#close-editor').addEventListener('click', () => editor.close());
+      document.querySelector('#cancel-editor').addEventListener('click', () => editor.close());
+      document.querySelector('#copy-button').addEventListener('click', copyLink);
+      document.querySelector('#whatsapp-button').addEventListener('click', () => {
+        const settings = readSettings();
+        const text = `A birthday wish for ${settings.name}: ${shareUrl(settings)}`;
+        window.open(`https://wa.me/?text=${encodeURIComponent(text)}`, '_blank', 'noopener,noreferrer');
+      });
+      document.querySelector('#share-button').addEventListener('click', async () => {
+        const settings = readSettings();
+        const data = { title: `A birthday wish for ${settings.name}`, text: settings.message, url: shareUrl(settings) };
+        if (navigator.share) {
+          try { await navigator.share(data); } catch (error) { if (error.name !== 'AbortError') notify('Sharing is not available here. Copy the link instead.'); }
+        } else {
+          await copyLink();
+        }
+      });
+      form.addEventListener('submit', (event) => {
+        event.preventDefault();
+        const settings = currentSettings();
+        try { localStorage.setItem(storageKey, JSON.stringify(settings)); } catch { /* The shareable link still works without local storage. */ }
+        applySettings(settings);
+        editor.close();
+        const url = new URL(window.location.href);
+        url.search = '';
+        window.history.replaceState({}, '', url);
+        notify('Your changes are saved on this device. Copy the link to share them.');
+      });
+
+      applySettings(readSettings());
+    })();
+  </script>
+</body>
+</html>
